@@ -1,5 +1,6 @@
 import pytest
-from interpreter.tokeniser import lex, map_tokens, tokenise, TokenType
+from interpreter.tokeniser import lex, map_tokens, tokenise
+from interpreter.token_type import TokenType
 
 def test_lex_empty_input():
     assert lex("") == []
