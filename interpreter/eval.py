@@ -1,22 +1,18 @@
 from interpreter.token_type import TokenType
+from interpreter.tape import Tape
 
-
-def eval_token(token, tape):
+def eval_token(token, tape: Tape):
     match token:
         case TokenType.INC_B:
-            tape.cells[tape.data_ptr] += 1
+            tape.inc_cur_cell()
         case TokenType.DEC_B:
-            tape.cells[tape.data_ptr] -= 1
+            tape.dec_cur_cell()
         case TokenType.INC_PTR:
-            tape.data_ptr += 1
+            tape.inc_data_ptr()
         case TokenType.DEC_PTR:
-            tape.data_ptr -= 1
+            tape.dec_data_ptr()
         case TokenType.OUT_B:
-            to_out = tape.cells[tape.data_ptr]
-            if 32 <= to_out <= 126:
-                print(chr(to_out))
-            else:
-                print(to_out)
+            print(tape.out_cur_cell())
         case TokenType.INP_B:
             print("TODO: Take in user input")
         case TokenType.BRZF:
