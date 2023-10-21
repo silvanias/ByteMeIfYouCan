@@ -1,5 +1,18 @@
-from tokeniser import tokenise
+from tokeniser import lex, tokenise
 
-user_inp = input("Gimme the brain\n")
-tokens = tokenise(user_inp)
-print(tokens)
+
+def main():
+    while True:
+        user_inp = input("> ")
+        if not user_inp:
+            continue
+        words = lex(user_inp)
+        tokens = tokenise(words)
+        print(tokens)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nInterrupted")
