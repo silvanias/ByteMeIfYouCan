@@ -45,3 +45,4 @@ class Program:
                 case TokenType.EOF:
                     self.eof = True
             self.inst_ptr.inc_ptr()
+            
