@@ -10,3 +10,4 @@ class TokenType(Enum):
     INP_B = ","
     BRZF = "["
     BRPB = "]"
+    EOF = "@"

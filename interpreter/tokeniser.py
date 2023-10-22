@@ -18,4 +18,5 @@ def map_tokens(word: str):
 
 def tokenise(words: list):
     tokens = list(map(map_tokens, words))
+    tokens.append(TokenType.EOF)
     return tokens

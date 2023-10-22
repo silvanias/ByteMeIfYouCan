@@ -1,4 +1,3 @@
-from interpreter.eval import eval_token
 from interpreter.tape import Tape
 from interpreter.token_type import TokenType
 from unittest.mock import patch

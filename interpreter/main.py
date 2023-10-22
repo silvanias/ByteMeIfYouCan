@@ -1,6 +1,6 @@
 from tokeniser import lex, tokenise
-from eval import eval_token
 from tape import Tape
+from program import Program
 
 
 def main():
@@ -13,8 +13,11 @@ def main():
         words = lex(user_inp)
         tokens = tokenise(words)
 
-        while tape.get_inst_ptr().get_ptr() < len(tokens):
-            eval_token(tokens[tape.get_inst_ptr().get_ptr()], tape)
+        # Create program object here, pass in tokens, plus pointer
+        program = Program(tokens, tape)
+
+        while tokens and not program.eof:
+            program.consume()
         tape.get_inst_ptr().reset_ptr()
 
 
