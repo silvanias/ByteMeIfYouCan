@@ -11,9 +11,10 @@ def main():
             continue
         words = lex(user_inp)
         tokens = tokenise(words)
-        for token in tokens:
-            eval_token(token, tape)
 
+        while tape.get_inst_ptr() < len(tokens):       
+            eval_token(tokens[tape.get_inst_ptr()], tape)
+        tape.reset_inst_ptr()
 
 if __name__ == "__main__":
     try:
