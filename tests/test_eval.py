@@ -6,30 +6,34 @@ from io import StringIO
 
 
 def test_eval_token_INC_B():
-    tape = Tape()
+    tape = Tape(100)
     eval_token(TokenType.INC_B, tape)
     assert tape.get_cur_cell_value() == 1
 
+
 def test_eval_token_DEC_B():
-    tape = Tape()
+    tape = Tape(100)
     tape.inc_cur_cell()
     eval_token(TokenType.DEC_B, tape)
     assert tape.get_cur_cell_value() == 0
 
+
 def test_eval_token_INC_PTR():
-    tape = Tape()
+    tape = Tape(100)
     eval_token(TokenType.INC_PTR, tape)
-    assert tape.get_data_ptr() == 1
+    assert tape.get_data_ptr().get_ptr() == 1
+
 
 def test_eval_token_DEC_PTR():
-    tape = Tape()
-    tape.inc_data_ptr()  # Set data pointer to 1
+    tape = Tape(100)
+    tape.get_data_ptr().inc_ptr()  # Set data pointer to 1
     eval_token(TokenType.DEC_PTR, tape)
-    assert tape.get_data_ptr() == 0
+    assert tape.get_data_ptr().get_ptr() == 0
+
 
 @patch("sys.stdout", new_callable=StringIO)
 def test_eval_token_OUT_B_printable(mock_stdout):
-    tape = Tape()
+    tape = Tape(100)
     for x in range(32):
         tape.inc_cur_cell()  # ASCII code for 'a'
     eval_token(TokenType.OUT_B, tape)
@@ -38,7 +42,7 @@ def test_eval_token_OUT_B_printable(mock_stdout):
 
 @patch("sys.stdout", new_callable=StringIO)
 def test_eval_token_OUT_B_printable(mock_stdout):
-    tape = Tape()
+    tape = Tape(100)
     for x in range(4):
         tape.inc_cur_cell()  # ASCII code for 'a'
     eval_token(TokenType.OUT_B, tape)
