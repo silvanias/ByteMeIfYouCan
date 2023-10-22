@@ -14,17 +14,17 @@ class Program:
         self.eval_token(self.__token_l[self.inst_ptr.get_ptr()])
 
     def eval_token(self, token):
-        if token == TokenType.BRPB:
-            if self.tape.get_cur_cell_value() != 0:
-                while self.__token_l[self.inst_ptr.get_ptr()] != TokenType.BRZF:
-                    self.inst_ptr.dec_ptr()
-            else:
-                self.inst_ptr.inc_ptr()
-
-        elif token == TokenType.BRZF:
+        if token == TokenType.BRZF:
             if self.tape.get_cur_cell_value() == 0:
                 while self.__token_l[self.inst_ptr.get_ptr()] != TokenType.BRPB:
                     self.inst_ptr.inc_ptr()
+            else:
+                self.inst_ptr.inc_ptr()
+
+        elif token == TokenType.BRPB:
+            if self.tape.get_cur_cell_value() != 0:
+                while self.__token_l[self.inst_ptr.get_ptr()] != TokenType.BRZF:
+                    self.inst_ptr.dec_ptr()
             else:
                 self.inst_ptr.inc_ptr()
 
@@ -41,8 +41,12 @@ class Program:
                 case TokenType.OUT_B:
                     print(self.tape.out_cur_cell())
                 case TokenType.INP_B:
-                    print("TODO: Take in user input")
+                    in_byte = input("Please input an integer\n")
+                    try:
+                        in_byte = int(in_byte)
+                    except ValueError:
+                        print("Could not format to integer")
+                    self.tape.set_cur_cell_value(in_byte)
                 case TokenType.EOF:
                     self.eof = True
             self.inst_ptr.inc_ptr()
-            

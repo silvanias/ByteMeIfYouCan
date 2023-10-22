@@ -16,6 +16,9 @@ class Tape:
     def get_cur_cell_value(self):
         return self.__cells[self.__data_ptr.get_ptr()]
 
+    def set_cur_cell_value(self, val):
+        self.__cells[self.__data_ptr.get_ptr()] = val
+    
     def inc_cur_cell(self):
         self.__cells[self.__data_ptr.get_ptr()] += 1
 
