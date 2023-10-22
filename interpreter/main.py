@@ -1,6 +1,7 @@
 from tokeniser import lex, tokenise
 from tape import Tape
 from program import Program
+import sys
 
 
 def main():
@@ -12,8 +13,6 @@ def main():
             continue
         words = lex(user_inp)
         tokens = tokenise(words)
-
-        # Create program object here, pass in tokens, plus pointer
         program = Program(tokens, tape)
 
         while tokens and not program.eof:
@@ -22,7 +21,16 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("\nInterrupted")
+    if (args_count := len(sys.argv)) > 2:
+        print(f"One argument expected, got {args_count - 1}")
+        raise SystemExit(2)
+    elif args_count < 2:
+        try:
+            main()
+        except KeyboardInterrupt:
+            print("\nInterrupted")
+    else:
+        if sys.argv[1] == "demo":
+            demo()
+        else:
+            print(f"{sys.argv[2]} is not supported")
