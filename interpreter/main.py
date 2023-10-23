@@ -2,6 +2,7 @@ from tokeniser import lex, tokenise
 from tape import Tape
 from program import Program
 import sys
+from demo_script import demo
 
 
 def main():
