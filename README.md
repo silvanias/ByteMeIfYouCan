@@ -21,7 +21,7 @@ To run a Brainfuck script, provide the path to the script:
 
 For a quick demonstration of the interpreter, you can run:
 
-python interpreter/main.py demo
+`$ python interpreter/main.py demo`
 
 ## Running Tests
 To run tests, use the following command:
