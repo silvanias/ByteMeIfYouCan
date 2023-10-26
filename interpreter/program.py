@@ -3,6 +3,22 @@ from interpreter.tape import Tape
 
 
 class Program:
+    """
+    Class representing a program in the interpreter.
+
+    Attributes:
+    - `__token_l`: List of tokens representing the program.
+    - `tape`: Tape object associated with the program.
+    - `inst_ptr`: Instruction pointer for the program.
+    - `data_ptr`: Data pointer for the program.
+    - `eof`: Flag indicating whether the end of the program has been reached.
+
+    Methods:
+    - __init__(tokens, tape): Initializes the Program with a list of tokens and a tape.
+    - consume(): Consumes the next token and evaluates it.
+    - eval_token(token): Evaluates the given token and performs the corresponding action.
+    """
+
     def __init__(self, tokens, tape: Tape) -> None:
         self.__token_l = tokens
         self.tape = tape
@@ -11,9 +27,16 @@ class Program:
         self.eof = False
 
     def consume(self):
+        """Consumes the next token and evaluates it."""
         self.eval_token(self.__token_l[self.inst_ptr.get_ptr()])
 
     def eval_token(self, token):
+        """
+        Evaluates the given token and performs the corresponding action.
+
+        Parameters:
+        - `token`: The token to be evaluated.
+        """
         if token == TokenType.BRZF:
             if self.tape.get_cur_cell_value() == 0:
                 while self.__token_l[self.inst_ptr.get_ptr()] != TokenType.BRPB:
