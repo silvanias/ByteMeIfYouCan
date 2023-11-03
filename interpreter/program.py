@@ -9,12 +9,11 @@ class Program:
     Attributes:
     - `_token_l`: List of tokens representing the program.
     - `tape`: Tape object associated with the program.
-    - `inst_ptr`: Instruction pointer for the program.
-    - `data_ptr`: Data pointer for the program.
     - `eof`: Flag indicating whether the end of the program has been reached.
 
     Methods:
     - __init__(tokens, tape): Initializes the Program with a list of tokens and a tape.
+    - get_cur_inst(): Return instruction at instruction pointer.
     - consume(): Consumes the next token and evaluates it.
     - eval_token(token): Evaluates the given token and performs the corresponding action.
     - branch_forward(): Executes forward branch operation based on current cell value.
@@ -25,13 +24,15 @@ class Program:
     def __init__(self, tokens, tape: Tape) -> None:
         self._token_l = tokens
         self.tape = tape
-        self.inst_ptr = tape.get_inst_ptr()
-        self.data_ptr = tape.get_data_ptr()
         self.eof = False
+
+    def get_cur_inst(self) -> TokenType:
+        """Return instruction at instruction pointer."""
+        return self._token_l[self.tape.get_inst_addr()]
 
     def consume(self) -> None:
         """Consumes the next token and evaluates it."""
-        self.eval_token(self._token_l[self.inst_ptr.get_ptr()])
+        self.eval_token(self.get_cur_inst())
 
     def eval_token(self, token) -> None:
         """
@@ -58,23 +59,23 @@ class Program:
 
         else:
             lin_cmds[token]()
-            self.inst_ptr.inc_ptr()
+            self.tape.get_inst_ptr().inc_ptr()
 
     def branch_forward(self) -> None:
         """Executes forward branch operation based on current cell value."""
         if self.tape.get_cur_cell_value() == 0:
-            while self._token_l[self.inst_ptr.get_ptr()] != TokenType.BRPB:
-                self.inst_ptr.inc_ptr()
+            while self.get_cur_inst() != TokenType.BRPB:
+                self.tape.get_inst_ptr().inc_ptr()
         else:
-            self.inst_ptr.inc_ptr()
+            self.tape.get_inst_ptr().inc_ptr()
 
     def branch_backward(self) -> None:
         """Executes backward branch operation based on current cell value."""
         if self.tape.get_cur_cell_value() != 0:
-            while self._token_l[self.inst_ptr.get_ptr()] != TokenType.BRZF:
-                self.inst_ptr.dec_ptr()
+            while self.get_cur_inst() != TokenType.BRZF:
+                self.tape.get_inst_ptr().dec_ptr()
         else:
-            self.inst_ptr.inc_ptr()
+            self.tape.get_inst_ptr().inc_ptr()
 
     def take_input(self) -> None:
         """Takes user input and sets the current cell value to the input integer."""
