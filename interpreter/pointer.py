@@ -11,19 +11,16 @@ class Pointer:
     """
 
     def __init__(self) -> None:
-        self.__address = 0
+        self._address = 0
 
-    def get_ptr(self):
-        return self.__address
+    def get_ptr(self) -> int:
+        return self._address
 
-    def reset_ptr(self):
-        self.__address = 0
+    def reset_ptr(self) -> None:
+        self._address = 0
 
-    def inc_ptr(self):
-        self.__address += 1
-
-    def dec__ptr(self):
-        self.__address -= 1
+    def inc_ptr(self) -> None:
+        self._address += 1
 
 
 class DataPointer(Pointer):
@@ -38,19 +35,19 @@ class DataPointer(Pointer):
 
     def __init__(self, cells_len) -> None:
         super().__init__()
-        self.__cells_len = cells_len
+        self._cells_len = cells_len
 
-    def inc_ptr(self):
-        if self._Pointer__address == self.__cells_len - 1:
-            self._Pointer__address = 0
+    def inc_ptr(self) -> None:
+        if self._address == self._cells_len - 1:
+            self._address = 0
         else:
-            self._Pointer__address += 1
+            self._address += 1
 
-    def dec_ptr(self):
-        if self._Pointer__address == 0:
-            self._Pointer__address = self.__cells_len - 1
+    def dec_ptr(self) -> None:
+        if self._address == 0:
+            self._address = self._cells_len - 1
         else:
-            self._Pointer__address -= 1
+            self._address -= 1
 
 
 class InstPointer(Pointer):
@@ -60,8 +57,9 @@ class InstPointer(Pointer):
     Methods:
     - dec_ptr(): Decrements address of pointer, handling prevention of negative addresses.
     """
-    def dec_ptr(self):
-        if self._Pointer__address != 0:
-            self._Pointer__address -= 1
+
+    def dec_ptr(self) -> None:
+        if self._address != 0:
+            self._address -= 1
         else:
             raise IndexError("Cannot make inst ptr less than 0")
