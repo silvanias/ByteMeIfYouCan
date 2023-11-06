@@ -67,6 +67,6 @@ class Tape:
     def out_cur_cell(self) -> int | str:
         """Outputs the value of the current cell."""
         to_out = self._cells[self._data_ptr.get_ptr()]
-        if 32 <= to_out <= 126:
+        if ord(" ") <= to_out <= ord("~"):
             return chr(to_out)
         return to_out
